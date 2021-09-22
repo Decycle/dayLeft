@@ -1,26 +1,58 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <DateSelect v-if="!selectedDate" @date-select="selectDate" />
+    <div v-else>
+        <DayView :date="selectedDate" />
+        <button class="btn" @click="clearDate">Back</button>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import dayjs from "dayjs";
+import DayView from "./components/DayView.vue";
+import DateSelect from "./components/DateSelect.vue";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    name: "App",
+    data() {
+        return {
+            selectedDate: null,
+        };
+    },
+    components: {
+        DayView,
+        DateSelect,
+    },
+    methods: {
+        selectDate(date) {
+            this.selectedDate = dayjs(date);
+        },
+        clearDate() {
+            this.selectedDate = null;
+        },
+    },
+};
 </script>
 
 <style>
+body {
+    background-color: #97372e;
+    font-family: "helvetica Neue", Helvetica, Arial;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    border: 0;
+}
+
+.btn {
+    outline: none;
+    border: 2px white solid;
+    background-color: transparent;
+    color: white;
+    font-size: 2rem;
 }
 </style>
